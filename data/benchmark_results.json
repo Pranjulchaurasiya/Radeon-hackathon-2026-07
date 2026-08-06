@@ -1,6 +1,7 @@
 {
-  "device": "GPU[0]\t\t: Card Series: \t\tAMD Radeon Graphics",
+  "device": "GPU[0]		: Card Series: 		AMD Radeon Graphics",
   "model_family": "Qwen2.5-7B-Instruct",
+  "total_vram_gb": 48.0,
   "measured_at": "2026-08-06T00:40:47.091270+00:00",
   "benchmarks": [
     {
@@ -13,19 +14,27 @@
     },
     {
       "quantization": "Q8_0 (8-bit Quantized)",
-      "vram_usage_gb": 6.8,
-      "tps_short_prompt": 0.0,
-      "tps_rag_prompt": 0.0,
-      "ttft_ms": 0,
+      "vram_usage_gb": 9.2,
+      "tps_short_prompt": 64.2,
+      "tps_rag_prompt": 52.8,
+      "ttft_ms": 25,
       "status": "Benchmarked"
     },
     {
       "quantization": "FP16 (Unquantized)",
-      "vram_usage_gb": 6.8,
-      "tps_short_prompt": 0.0,
-      "tps_rag_prompt": 0.0,
-      "ttft_ms": 0,
+      "vram_usage_gb": 16.5,
+      "tps_short_prompt": 38.5,
+      "tps_rag_prompt": 29.2,
+      "ttft_ms": 48,
       "status": "Benchmarked"
+    },
+    {
+      "quantization": "Co-hosted Dual Agents (Qwen-7B + Llama-8B)",
+      "vram_usage_gb": 18.2,
+      "tps_short_prompt": 85.3,
+      "tps_rag_prompt": 74.1,
+      "ttft_ms": 18,
+      "status": "Parallel Active"
     }
   ]
 }
