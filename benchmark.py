@@ -23,10 +23,13 @@ OLLAMA_URL = "http://localhost:11434"
 OUTPUT_FILE = Path(__file__).resolve().parent / "data" / "benchmark_results.json"
 
 # Models to benchmark (Ollama tag format)
+# Note: qwen2.5:7b-instruct default = Q4_K_M (4.7 GB)
+# FP16 and Q8_0 use explicit size tags if available; benchmark gracefully
+# skips models that aren't pulled.
 MODELS = [
-    {"quantization": "FP16 (Unquantized)",         "tag": "qwen2.5:7b-instruct"},
-    {"quantization": "Q8_0 (8-bit Quantized)",      "tag": "qwen2.5:7b-instruct:q8_0"},
-    {"quantization": "Q4_K_M (4-bit Quantized - Active)", "tag": "qwen2.5:7b-instruct:q4_K_M"},
+    {"quantization": "Q4_K_M (4-bit Quantized - Active)", "tag": "qwen2.5:7b-instruct"},
+    {"quantization": "Q8_0 (8-bit Quantized)",            "tag": "qwen2.5:7b-instruct-q8_0"},
+    {"quantization": "FP16 (Unquantized)",                "tag": "qwen2.5:7b-instruct-fp16"},
 ]
 
 SHORT_PROMPT = "What is the minimum headway buffer required between consecutive trains?"
