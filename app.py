@@ -572,17 +572,31 @@ with st.sidebar:
         ["qwen2.5:7b-instruct:q4_K_M", "qwen2.5:7b-instruct:q8_0", "llama3.1:8b:q4_K_M"],
         label_visibility="visible"
     )
+    # Build Quantization options dynamically from benchmark_results.json
+    quant_options = []
+    if bench_data and bench_data.get("benchmarks"):
+        for b in bench_data["benchmarks"]:
+            q_label = b.get("quantization", "").split(" (")[0]
+            tps_val = b.get("tps_short_prompt", 0.0)
+            vram_val = b.get("vram_usage_gb", 0.0)
+            if BENCH_IS_PLACEHOLDER:
+                quant_options.append(f"{q_label}  →  reference estimate")
+            else:
+                quant_options.append(f"{q_label}  →  {tps_val} tok/s / {vram_val} GB")
+    if not quant_options:
+        quant_options = ["Q4_K_M  →  98.8 tok/s / 6.8 GB", "Q8_0   →  64.2 tok/s / 7.9 GB", "FP16   →  38.5 tok/s / 14.8 GB"]
+
     quant_choice = st.selectbox(
         "Quantization Mode",
-        ["Q4_K_M  →  92.4 tok/s / 4.6 GB", "Q8_0   →  64.2 tok/s / 7.9 GB", "FP16   →  38.5 tok/s / 14.8 GB"],
+        quant_options,
         label_visibility="visible"
     )
     temperature = st.slider("Inference Temperature", 0.0, 1.0, 0.2, 0.05)
     # Quantization selector is authoritative for Qwen presets; model selection
     # still permits the alternate Llama model in Q4 mode.
-    if quant_choice.startswith("Q8_0"):
+    if "Q8_0" in quant_choice:
         model_choice = "qwen2.5:7b-instruct:q8_0"
-    elif quant_choice.startswith("FP16"):
+    elif "FP16" in quant_choice:
         model_choice = "qwen2.5:7b-instruct"
     st.markdown('</div>', unsafe_allow_html=True)
 
