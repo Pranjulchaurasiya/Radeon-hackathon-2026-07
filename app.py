@@ -568,9 +568,9 @@ with st.sidebar:
     st.markdown('<div class="sidebar-section">', unsafe_allow_html=True)
     st.markdown('<div class="sidebar-section-label">// Engine Configurator</div>', unsafe_allow_html=True)
 
-    model_choice = st.selectbox(
+    model_choice_raw = st.selectbox(
         "LLM Weights",
-        ["qwen2.5:7b-instruct:q4_K_M", "qwen2.5:7b-instruct:q8_0", "llama3.1:8b:q4_K_M"],
+        ["qwen2.5:7b-instruct (Q4_K_M)", "qwen2.5:7b-instruct:q8_0", "llama3.1:8b:q4_K_M"],
         label_visibility="visible"
     )
     # Build Quantization options dynamically from benchmark_results.json
@@ -593,12 +593,15 @@ with st.sidebar:
         label_visibility="visible"
     )
     temperature = st.slider("Inference Temperature", 0.0, 1.0, 0.2, 0.05)
-    # Quantization selector is authoritative for Qwen presets; model selection
-    # still permits the alternate Llama model in Q4 mode.
-    if "Q8_0" in quant_choice:
+    # Clean model tag for Ollama API call
+    if "qwen2.5:7b-instruct" in model_choice_raw:
+        model_choice = "qwen2.5:7b-instruct"
+    elif "Q8_0" in quant_choice:
         model_choice = "qwen2.5:7b-instruct:q8_0"
     elif "FP16" in quant_choice:
         model_choice = "qwen2.5:7b-instruct"
+    else:
+        model_choice = model_choice_raw.split(" ")[0]
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Disruption Config

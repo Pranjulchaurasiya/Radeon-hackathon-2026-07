@@ -59,7 +59,7 @@ class RailwayOrchestrator:
         }
 
     def process_disruption(
-        self, scenario_key: str, user_prompt: str, *, model_name: str = "qwen2.5:7b-instruct:q4_K_M",
+        self, scenario_key: str, user_prompt: str, *, model_name: str = "qwen2.5:7b-instruct",
         temperature: float = 0.2, session_id: str = "default"
     ) -> Dict[str, Any]:
         """
