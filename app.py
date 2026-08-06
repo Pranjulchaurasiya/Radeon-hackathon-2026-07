@@ -536,10 +536,11 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     # Live Hardware Meters
-    vram_pct = min(int((live_vram / 24.0) * 100), 100) if live_vram > 0 else 0
+    total_vram_gb = bench_data.get("total_vram_gb", 48.0)
+    vram_pct = min(int((live_vram / total_vram_gb) * 100), 100) if live_vram > 0 else 0
     tps_pct  = min(int((live_tps  / 120.0) * 100), 100) if live_tps  > 0 else 0
     ttft_pct = min(int((ttft_ms   / 300.0) * 100), 100) if ttft_ms   > 0 else 0
-    vram_display = f"{live_vram} / 24 GB" if live_vram > 0 else "—  run benchmark.py"
+    vram_display = f"{live_vram} / {int(total_vram_gb)} GB" if live_vram > 0 else "—  run benchmark.py"
     tps_display  = f"{live_tps} tok/s"    if live_tps  > 0 else "—  run benchmark.py"
     ttft_display = f"{ttft_ms} ms"        if ttft_ms   > 0 else "—  run benchmark.py"
     st.markdown(f"""
