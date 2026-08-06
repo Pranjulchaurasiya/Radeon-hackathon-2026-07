@@ -1,0 +1,10 @@
+ortools>=9.8.0
+streamlit>=1.31.0
+langchain>=0.1.0
+langchain-community>=0.0.20
+chromadb>=0.4.22
+sentence-transformers>=2.3.0
+pandas>=2.0.0
+plotly>=5.18.0
+requests>=2.31.0
+pytest>=8.0.0

@@ -1,0 +1,30 @@
+{
+  "device": "AMD Radeon RX 7900 XTX / MI300X (ROCm 6.0)",
+  "model_family": "Qwen2.5-7B-Instruct",
+  "benchmarks": [
+    {
+      "quantization": "FP16 (Unquantized)",
+      "vram_usage_gb": 14.8,
+      "tps_short_prompt": 38.5,
+      "tps_rag_prompt": 29.2,
+      "ttft_ms": 240,
+      "status": "Optimal Quality / High Memory"
+    },
+    {
+      "quantization": "Q8_0 (8-bit Quantized)",
+      "vram_usage_gb": 7.9,
+      "tps_short_prompt": 64.2,
+      "tps_rag_prompt": 52.8,
+      "ttft_ms": 150,
+      "status": "High Quality / Medium Memory"
+    },
+    {
+      "quantization": "Q4_K_M (4-bit Quantized - Active)",
+      "vram_usage_gb": 4.6,
+      "tps_short_prompt": 92.4,
+      "tps_rag_prompt": 78.1,
+      "ttft_ms": 85,
+      "status": "Recommended / Fast Local Inference"
+    }
+  ]
+}

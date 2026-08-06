@@ -1,0 +1,92 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# ── Virtual Environments ───────────────────────────────────────────────────────
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ── Streamlit ─────────────────────────────────────────────────────────────────
+.streamlit/secrets.toml
+
+# ── Pytest / Testing ──────────────────────────────────────────────────────────
+.pytest_cache/
+.cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+nosetests.xml
+test-results/
+
+# ── Jupyter / Notebooks ───────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── ChromaDB / Vector Store ───────────────────────────────────────────────────
+data/chroma_db/
+chroma_db/
+*.chroma
+
+# ── Secrets / API Keys ────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+secrets.toml
+config.local.py
+
+# ── OS Junk ───────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# ── IDE / Editor ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Model Weights (too large for git) ─────────────────────────────────────────
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+models/
+
+# ── Benchmark results (keep the file, but ignore local temp outputs) ───────────
+# data/benchmark_results.json is intentionally tracked (real GPU results)
+# Ignore any raw dump files
+data/*.tmp
+data/*.raw

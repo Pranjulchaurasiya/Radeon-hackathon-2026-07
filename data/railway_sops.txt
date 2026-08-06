@@ -1,0 +1,24 @@
+STANDARD OPERATING PROCEDURES (SOP) - RAILWAY TRAFFIC CONTROL & DISRUPTION MANAGEMENT
+
+SECTION 1: OVERVIEW AND GENERAL PRINCIPLES
+1.1 Traffic Management Objective: The primary goal of railway traffic control is to maintain safe train separation while minimizing total system arrival delays across all passenger and freight services.
+1.2 Safety First Protocol: Under no circumstances may safety rules (minimum headway, platform isolation, single-track occupancy) be compromised for schedule recovery.
+
+SECTION 2: TRACK HEADWAY AND SEPARATION
+2.1 Minimum Track Headway: A strict minimum time separation of 3.0 minutes must be maintained between any two consecutive trains operating on the same track segment.
+2.2 Signal Block Isolation: No two trains are permitted to occupy the same signaling block or single-track bottleneck concurrently.
+
+SECTION 3: STATION AND PLATFORM ASSIGNMENTS
+3.1 Single Occupancy Rule: Each station platform can accommodate at most one train at any given timestamp.
+3.2 Minimum Station Dwell Buffer: Arriving trains must have a clearance margin of at least 3 minutes between one train departing a platform and the next train arriving at that same platform.
+
+SECTION 4: TRAIN PRIORITY CLASSES AND DISRUPTION DISPATCHING
+4.1 Priority Classification:
+    - Class 1 (Highest): Express Intercity Trains (e.g., 12431 Vande Bharat Express, Rajdhani services).
+    - Class 2 (Medium): Regional Passenger Trains (e.g., 14307 PRG-BE Passenger, Commuter services).
+    - Class 3 (Standard): Local / Freight Services (e.g., 477 FTR Freight Train, Goods rakes).
+4.2 Disruption Priority Rule (§4.2): When an Express Intercity train (Class 1) experiences a primary disruption delay exceeding 10 minutes, following or conflicting Commuter trains (Class 2) operating on single-track bottlenecks (such as Segment B-4) must be held or delayed at preceding stations to preserve the required 3-minute headway window for the Express train.
+
+SECTION 7: EMERGENCY PLATFORM REASSIGNMENTS AND MAINTENANCE
+7.1 Emergency Platform Fallback (§7.1): In the event of scheduled maintenance or an unscheduled track outage closing Platform 1 at Station X, Platform 2 is designated as the primary emergency fallback.
+7.2 Reassignment Clearance: When reassigning a train from Platform 1 to Platform 2, the traffic controller must verify that the revised arrival and departure times maintain a 3-minute clearance with all previously scheduled arrivals at Platform 2.
