@@ -672,7 +672,7 @@ with center_col:
         """, unsafe_allow_html=True)
 
     def stream_response(full_text):
-        words = html.escape(full_text).split()
+        words = full_text.split()
         displayed = ""
         for word in words:
             displayed += word + " "
@@ -685,7 +685,7 @@ with center_col:
                 {displayed}<span class="cursor">▌</span>
             </div>
             """, unsafe_allow_html=True)
-            time.sleep(0.025)
+            time.sleep(0.015)
         # Final without cursor
         chat_ph.markdown(f"""
         <div class="agent-bubble">
@@ -693,7 +693,7 @@ with center_col:
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="#00ffcc"><circle cx="12" cy="12" r="10"/></svg>
                 &nbsp;DISPATCH COPILOT · QWEN 2.5-7B (Q4_K_M · ROCm)
             </div>
-            {displayed}
+            {full_text}
         </div>
         """, unsafe_allow_html=True)
 
@@ -784,18 +784,25 @@ with center_col:
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="#00ffcc"><circle cx="12" cy="12" r="10"/></svg>
                     &nbsp;DISPATCH COPILOT · QWEN 2.5-7B (Q4_K_M · ROCm)
                 </div>
-                {html.escape(res.get('explanation', ''))}
+                {res.get('explanation', '')}
             </div>
             """, unsafe_allow_html=True)
 
         # Success stat flash
         tps_v = f"{res['tps']}" if res.get("tps") is not None else "offline"
-        lat_v = f"{res['latency_ms']}" if res.get("latency_ms") is not None else "unavailable"
+        raw_lat = res.get("latency_ms")
+        if raw_lat is None:
+            lat_v = "unavailable"
+        elif raw_lat >= 1000:
+            lat_v = f"{raw_lat / 1000.0:.1f}s"
+        else:
+            lat_v = f"{raw_lat} ms"
+
         stats_ph.markdown(f"""
         <div class="stat-flash">
             <div class="stat-chip">✓ VERIFIED — 0 VIOLATIONS</div>
             <div class="stat-chip">{tps_v} tok/s ROCm</div>
-            <div class="stat-chip">{lat_v} ms TTFT</div>
+            <div class="stat-chip">{lat_v} TTFT</div>
             <div class="stat-chip amber">OR-TOOLS CP-SAT</div>
         </div>
         """, unsafe_allow_html=True)
