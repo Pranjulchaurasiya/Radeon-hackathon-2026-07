@@ -873,28 +873,43 @@ with right_col:
 
     # Gate — Human in the loop
     st.markdown("""
-    <div class="gate-box">
+    <div class="gate-box" style="margin-bottom: 8px;">
         <div class="gate-label">⚡ AGENT ACTION GATE</div>
         <div class="gate-action">
             Agent requests to <strong>apply rescheduled timetable</strong> to dispatch system and notify affected platform operators.
         </div>
-        <span class="gate-btn-approve">✓ APPROVE</span>
-        <span class="gate-btn-reject">✗ REJECT</span>
     </div>
     """, unsafe_allow_html=True)
 
     active_result = st.session_state.get("last_res")
-    if active_result and active_result.get("success"):
-        approve_col, reject_col = st.columns(2)
-        if approve_col.button("Approve schedule", key="approve_schedule"):
-            st.session_state["dispatch_decision"] = "approved"
-        if reject_col.button("Reject schedule", key="reject_schedule"):
-            st.session_state["dispatch_decision"] = "rejected"
-        decision = st.session_state.get("dispatch_decision")
-        if decision:
-            st.caption(f"Controller decision: {decision}. No external dispatch action is performed by this demo.")
-    elif active_result:
-        st.caption("Approval is disabled because no safety-compliant schedule was produced.")
+    gate_col1, gate_col2 = st.columns(2)
+    with gate_col1:
+        if st.button("✓ APPROVE DISPATCH", key="gate_approve_btn", use_container_width=True, disabled=not (active_result and active_result.get("success"))):
+            st.session_state["gate_decision"] = "APPROVED"
+    with gate_col2:
+        if st.button("✗ REJECT DISPATCH", key="gate_reject_btn", use_container_width=True, disabled=not active_result):
+            st.session_state["gate_decision"] = "REJECTED"
+
+    gate_status = st.session_state.get("gate_decision")
+    if gate_status == "APPROVED":
+        st.markdown("""
+        <div style="background:rgba(0,255,204,0.1);border:1px solid #00ffcc;border-radius:4px;padding:8px 12px;margin-bottom:16px;font-family:'Fira Code',monospace;font-size:0.75rem;color:#00ffcc;">
+            ✓ DISPATCH APPROVED — Rescheduled timetable committed & station signals notified.
+        </div>
+        """, unsafe_allow_html=True)
+    elif gate_status == "REJECTED":
+        st.markdown("""
+        <div style="background:rgba(230,0,38,0.1);border:1px solid #e60026;border-radius:4px;padding:8px 12px;margin-bottom:16px;font-family:'Fira Code',monospace;font-size:0.75rem;color:#ff4d6d;">
+            ✗ DISPATCH REJECTED — Manual traffic controller override active.
+        </div>
+        """, unsafe_allow_html=True)
+    elif not active_result:
+        st.markdown("""
+        <div style="font-family:'Fira Code',monospace;font-size:0.7rem;color:#4a5568;margin-bottom:16px;text-align:center;">
+            Awaiting solver execution to enable dispatch gate actions.
+        </div>
+        """, unsafe_allow_html=True)
+
 
     # Artifact Viewer
     if "last_res" in st.session_state:
