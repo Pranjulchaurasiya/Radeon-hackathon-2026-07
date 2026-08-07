@@ -6,7 +6,7 @@
 [![AMD Radeon GPU](https://img.shields.io/badge/AMD-Radeon%20GPU%20(ROCm)-E63946?style=for-the-badge&logo=amd)](https://radeon-global.anruicloud.com/)
 [![Local Inference](https://img.shields.io/badge/Model-Qwen2.5--7B--Instruct-2EC4B6?style=for-the-badge)](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)
 [![Solver](https://img.shields.io/badge/Optimization-Google%20OR--Tools%20CP--SAT-F4A340?style=for-the-badge)](https://developers.google.com/optimization)
-[![Tests](https://img.shields.io/badge/Tests-8%2F8%20Passing-00cc88?style=for-the-badge)](#testing)
+[![Tests](https://img.shields.io/badge/Tests-9%2F9%20Passing-00cc88?style=for-the-badge)](#testing)
 [![Dataset](https://img.shields.io/badge/Dataset-Indian%20Railways%202017%20(186K%20rows)-4a90d9?style=for-the-badge)](#-dataset)
 
 ---
@@ -155,7 +155,7 @@ python -m streamlit run app.py
 ### 5. Run Tests
 ```bash
 python -m pytest tests/ -v
-# Expected: 5/5 PASSED
+# Expected: 9/9 PASSED
 ```
 
 ---
@@ -191,14 +191,18 @@ python -m pytest tests/ -v
 ```
 
 ```
-tests/test_planner.py::test_planner_scenario_a        PASSED  ✓ Express delay >= 15 min
-tests/test_planner.py::test_planner_scenario_b        PASSED  ✓ Platform 2 reassignment
-tests/test_planner.py::test_time_format_no_rollover   PASSED  ✓ No '08:75' invalid times
-tests/test_verifier.py::test_valid_schedule_passes    PASSED  ✓ Compliant schedule accepted
-tests/test_verifier.py::test_headway_violation_fails  PASSED  ✓ < 3 min headway rejected
+tests/test_memory.py::test_session_memory_isolated_and_persisted   PASSED  ✓ Isolation of chat memory
+tests/test_planner.py::test_planner_scenario_a                     PASSED  ✓ Express delay >= 15 min
+tests/test_planner.py::test_planner_scenario_b                     PASSED  ✓ Platform 2 reassignment
+tests/test_planner.py::test_time_format_no_rollover                PASSED  ✓ No '08:75' invalid times
+tests/test_verifier.py::test_valid_schedule_passes                 PASSED  ✓ Compliant schedule accepted
+tests/test_verifier.py::test_headway_violation_fails               PASSED  ✓ < 3 min headway rejected
+tests/test_verifier.py::test_cross_hour_headway_correct            PASSED  ✓ Hour crossover safety buffer checks
+tests/test_verifier.py::test_vande_bharat_dynamic_headway_5m       PASSED  ✓ Vande Bharat dynamic 5m headway rule
+tests/test_verifier.py::test_track_headway_detected_across_platforms PASSED  ✓ Track separation across platforms
 ```
 
-**8 / 8 tests passing** (after `pip install -r requirements.txt`)
+**9 / 9 tests passing** (after `pip install -r requirements.txt`)
 
 ---
 
