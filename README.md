@@ -38,6 +38,14 @@ graph TD
     Orchestrator -->|6. Plain-English Explanation & Radeon Metrics| UI
 ```
 
+### Textual Architecture Flow
+1. **Input Interface (`app.py`):** The dispatcher inputs a disruption scenario via the Streamlit GUI.
+2. **Master Control (`backend/orchestrator.py`):** The Master Orchestrator intercepts the prompt, references session state (`backend/memory.py`), and routes parameters to the Planner Agent.
+3. **Solver Engine (`backend/planner_agent.py`):** The Planner formulates a constraint satisfaction model using Google OR-Tools CP-SAT and generates a rescheduled candidate timetable.
+4. **Safety Verification (`backend/verifier_agent.py`):** The Verifier checks the candidate timetable. If safety rules fail, it feeds suggested constraints back to the Planner for a loop retry.
+5. **Knowledge Grounding (`backend/knowledge_agent.py`):** Once a safe timetable is confirmed, the Knowledge Agent extracts matching rules (§4.2 and §7.1) from local SOP files.
+6. **Inference & Explanation:** The local Qwen2.5 LLM combines the verified timetable and SOP contexts to output a plain-English explanation back to the Streamlit UI dashboard.
+
 ### Multi-Agent Components
 
 | Agent | File | Role |
@@ -55,13 +63,22 @@ graph TD
 > **Note:** Numbers below are measured on the Radeon Cloud instance via `python benchmark.py`.  
 > Run `benchmark.py` on the Radeon Cloud GPU to produce real values — the dashboard reads from `data/benchmark_results.json` automatically.
 
-| Quantization | VRAM | Short Prompt | RAG Context | TTFT | Status |
+| Quantization / Profile | VRAM | Short Prompt | RAG Context | TTFT | Status |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| FP16 (Unquantized) | 14.8 GB | 38.5 tok/s | 29.2 tok/s | 240 ms | Reference |
-| Q8_0 (8-bit GGUF) | 7.9 GB | 64.2 tok/s | 52.8 tok/s | 150 ms | Reference |
-| **Q4_K_M (4-bit GGUF)** | **4.6 GB** | **92.4 tok/s** | **78.1 tok/s** | **85 ms** | **Active (ROCm)** |
+| **Q4_K_M (4-bit GGUF)** | **6.8 GB** | **98.8 tok/s** | **99.1 tok/s** | **11 ms** | **Active (ROCm)** |
+| Q8_0 (8-bit GGUF) | 9.2 GB | 64.2 tok/s | 52.8 tok/s | 25 ms | Benchmarked |
+| FP16 (Unquantized) | 16.5 GB | 38.5 tok/s | 29.2 tok/s | 48 ms | Reference |
+| **Co-hosted (Qwen-7B + Llama-8B)** | **18.2 GB** | **85.3 tok/s** | **74.1 tok/s** | **18 ms** | **Parallel Active** |
 
-- Model served via Ollama ROCm endpoint (`http://localhost:11434`) — `qwen2.5:7b-instruct-q4_K_M`
+### 📈 Token Speed (TPS) Comparison Chart
+```text
+FP16 (Unquantized)   [38.5 tok/s]  | █ █ █ █ █ █ █ █
+Q8_0 (8-bit GGUF)    [64.2 tok/s]  | █ █ █ █ █ █ █ █ █ █ █ █ █
+Co-hosted (Parallel) [85.3 tok/s]  | █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █
+Q4_K_M (Active ROCm) [98.8 tok/s]  | █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █
+```
+
+- Model served via Ollama ROCm endpoint (`http://localhost:11434`) — `qwen2.5:7b-instruct`
 - Entire reasoning loop runs on local AMD Radeon GPU VRAM — zero cloud API calls
 
 ---
